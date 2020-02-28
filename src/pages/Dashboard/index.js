@@ -7,12 +7,6 @@ import Menu from "../components/Menu2";
 import TablePoints  from "../components/TablePoints";
 
 
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
 
 
 class Dashboard extends Component {
@@ -125,24 +119,7 @@ class Dashboard extends Component {
                     </form>
                 </SCGrid>
                 <SCGrid item lg={9} xs={12} >
-                <Paper>
-                    <Table>
-                        <TableHead>
-                        <TableRow>
-                            <TableCell>Tipo</TableCell>
-                            <TableCell>Hora</TableCell>
-                        </TableRow>
-                        </TableHead>
-                        <TableBody>
-                        {Object.keys(this.rows).map(k => (
-                            <TableRow key={this.rows[k]._id}>
-                            <TableCell>{this.rows[k][0]}</TableCell>
-                            <TableCell>{this.rows[k][1]}</TableCell>
-                            </TableRow>
-                        ))}
-                        </TableBody>
-                    </Table>
-                    </Paper>
+                    <TablePoints rows={this.rows} />
                 </SCGrid>
             </SCGrid>
             
