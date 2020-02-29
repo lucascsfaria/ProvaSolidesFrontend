@@ -6,15 +6,11 @@ import { SCGrid, GridCenter, SCInput, SCInputLabel, SCSelect, SCMenuItem, SCButt
 import Menu from "../components/Menu2";
 import TablePoints  from "../components/TablePoints";
 
-
-
-
 class Dashboard extends Component {
     state = {
         type: "",
         error: "",
-        points: [],
-        setPoint:"",
+        points: []
     };
 
     handleSavePoint = async e => {
@@ -25,6 +21,7 @@ class Dashboard extends Component {
         } else {
             try {
                 await api.post("/points", { type });
+                this.props.history.push("/a");
                 this.props.history.push("/dashboard");
             } catch (err) {
                 console.log(err);
@@ -32,6 +29,24 @@ class Dashboard extends Component {
             }
         }
     };
+
+    loadPoints = async () => {
+        try {
+            const response = await api.get("/points");
+        
+            const data = [];
+
+            for (let i = 0; i < response.data.length; i++) {
+                data.push(this.createData(response.data[i].type, response.data[i].created_at));
+                
+            }
+            
+            this.setState({ points: data });
+        } catch (err) {
+          console.log(err);
+        }
+      };
+
     createData(type, date) {
         let textType = ''
         switch (type){
@@ -51,39 +66,15 @@ class Dashboard extends Component {
                 textType = ''
                 break;
         }
-        return  [textType, date];
+        return  {textType, date};
       }
+
+    componentDidMount() {
+        this.loadPoints();
+    }
     
-      loadPoint = async e => {
-        const response = await api.get('/points');
-        this.setState({point: response.data})
-
-        let data = [];
-
-        for (let i = 0; i < response.data.length; i++) {
-            data.push(this.createData(response.data[i].type,response.data[i].created_at));
-            
-        }
-        console.log(data)
-        console.log(typeof(data));
-
-        Object.keys(data).map(k => ( 
-                //<TableRow key={this.data[k]._id}>
-                console.log(this.data[1][1])
-            ));
-        
-            
-        return data
-    };
-
-
-    rows = this.loadPoint();
-    
-
-
-
     render() {
-        //console.log(rows);
+        const { points } = this.state;
         return (
         <React.Fragment>
             <Menu />
@@ -119,7 +110,7 @@ class Dashboard extends Component {
                     </form>
                 </SCGrid>
                 <SCGrid item lg={9} xs={12} >
-                    <TablePoints rows={this.rows} />
+                    <TablePoints rows={points} />
                 </SCGrid>
             </SCGrid>
             

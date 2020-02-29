@@ -1,6 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -16,14 +14,14 @@ export default function TablePoints({ rows }) {
         <TableHead>
           <TableRow>
             <TableCell>Tipo</TableCell>
-            <TableCell>Hora</TableCell>
+            <TableCell>Data e Hora</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {Object.keys(rows).map(k => (
-            <TableRow key={rows[k]._id}>
-              <TableCell>{rows[k][0]}</TableCell>
-              <TableCell>{rows[k][1]}</TableCell>
+          {rows.map(row => (
+            <TableRow key={row._id}>
+              <TableCell>{row.textType}</TableCell>
+              <TableCell>{row.date}</TableCell>
             </TableRow>
           ))}
         </TableBody>
