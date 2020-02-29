@@ -9,13 +9,15 @@ import { SCGrid,
          SCButtonSubmit,
          SCFormControl } from "./styles";
 import Menu from "../components/Menu2";
+import TableUsers  from "../components/TableUsers";
 
 class SignUp extends Component {
   state = {
     username: "",
     email: "",
     password: "",
-    error: ""
+    error: "",
+    users: []
   };
 
   handleSignUp = async e => {
@@ -33,26 +35,35 @@ class SignUp extends Component {
       }
     }
   };
+  createData(name, email) {
+    return  {name, email};
+  }
 
   loadUsers = async () => {
     try {
-        const response = await api.get("/points");
+        const response = await api.get("/users");
     
         const data = [];
 
         for (let i = 0; i < response.data.length; i++) {
-            data.push(this.createData(response.data[i].type, response.data[i].created_at));
+            data.push(this.createData(response.data[i].username, response.data[i].email));
             
         }
         
-        this.setState({ points: data });
+        console.log(data)
+
+        this.setState({ users: data });
     } catch (err) {
       console.log(err);
     }
   };
 
+  componentDidMount() {
+    this.loadUsers();
+  }
 
   render() {
+    const { users } = this.state;
     return (
     <React.Fragment>
       <Menu />
@@ -97,7 +108,7 @@ class SignUp extends Component {
               </form>
           </SCGrid>
           <SCGrid item lg={9} xs={12} >
-              {/* <TablePoints rows={points} /> */}
+              <TableUsers rows={users} /> 
           </SCGrid>
       </SCGrid>
       

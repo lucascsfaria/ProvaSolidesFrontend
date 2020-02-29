@@ -20,7 +20,7 @@ export default function TablePoints({ rows }) {
         <TableBody>
           {rows.map(row => (
             <TableRow key={row._id}>
-              <TableCell>{row.username}</TableCell>
+              <TableCell>{row.name}</TableCell>
               <TableCell>{row.email}</TableCell>
             </TableRow>
           ))}
