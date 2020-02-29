@@ -16,17 +16,14 @@ export const SCGrid = styled(Grid)({
 });
 
 export const SCFormControl = styled(FormControl)({
-    margin: '5px',
-    minWidth: '120',
-    maxWidth: '300',
+  width: '96%',
+  margin: '10px 2%',
 });
 
 export const SCInput = styled(Input)({
 });
 export const SCInputLabel = styled(InputLabel)({
     fontSize: '16px',
-    textAlign: 'center',
-    margin: '10px 0'
 });
 export const SCMenuItem = styled(MenuItem)({
 });

@@ -5,7 +5,7 @@ const Menu = [
     },
     {
       label: "Cadastrar Usuário",
-      pathname: "/signup"
+      pathname: "/user"
     },
 
   ];
