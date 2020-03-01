@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import api from "../../services/api";
 
 import { SCGrid, GridCenter, SCInput, SCInputLabel, SCSelect, SCMenuItem, SCButtonSubmit } from "./styles";
-import Menu from "../components/Menu2";
+import Menu from "../components/Menu";
 import TablePoints  from "../components/TablePoints";
 
 class Dashboard extends Component {

@@ -8,7 +8,7 @@ import { SCGrid,
          SCInputLabel,
          SCButtonSubmit,
          SCFormControl } from "./styles";
-import Menu from "../components/Menu2";
+import Menu from "../components/Menu";
 import TableUsers  from "../components/TableUsers";
 
 class SignUp extends Component {
