@@ -29,6 +29,7 @@ class SignUp extends Component {
       try {
         await api.post("/users", { username, email, password });
         this.props.history.push("/");
+        this.props.history.push("/user");
       } catch (err) {
         console.log(err);
         this.setState({ error: "Ocorreu um erro ao registrar conta." });
