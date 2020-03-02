@@ -5,12 +5,14 @@ import api from "../../services/api";
 import { SCGrid, GridCenter, SCInput, SCInputLabel, SCSelect, SCMenuItem, SCButtonSubmit } from "./styles";
 import Menu from "../components/Menu";
 import TablePoints  from "../components/TablePoints";
+import Calendar  from "../components/Calendar";
 
 class Dashboard extends Component {
     state = {
         type: "",
         error: "",
-        points: []
+        pointsTable: [],
+        pointsCalendar: [],
     };
 
     handleSavePoint = async e => {
@@ -34,14 +36,16 @@ class Dashboard extends Component {
         try {
             const response = await api.get("/points");
         
-            const data = [];
+            const dataTable = [];
+            const dataCalendar = [];
 
             for (let i = 0; i < response.data.length; i++) {
-                data.push(this.createData(response.data[i].type, response.data[i].created_at));
-                
+                dataTable.push(this.createData(response.data[i].type, response.data[i].created_at));
+                dataCalendar.push(this.createDataCalendar(response.data[i].type, response.data[i].created_at));
             }
             
-            this.setState({ points: data });
+            this.setState({ pointsTable: dataTable });
+            this.setState({ pointsCalendar: dataCalendar });
         } catch (err) {
           console.log(err);
         }
@@ -69,12 +73,44 @@ class Dashboard extends Component {
         return  {textType, date};
       }
 
+      createDataCalendar(type, date) {
+        let title = '';
+        let startDate = date;
+        const aux = new Date(date);
+        const month = aux.getMonth()>9?aux.getMonth()+1:'0'+ (aux.getMonth()+1)
+        const data = aux.getDate()>9?aux.getDate():'0'+ (aux.getDate())
+        const hour = aux.getHours()>9?aux.getHours():'0'+ (aux.getHours())
+        const minutes = aux.getMinutes()>9?aux.getMinutes():'0'+ (aux.getMinutes())
+        const seconds = aux.getSeconds()>9?aux.getSeconds()+1:'0'+ (aux.getSeconds()+1)
+
+        let endDate = `${aux.getFullYear()}-${month}-${data} ${hour}:${minutes}:${seconds}`;
+
+        switch (type){
+            case 1:
+                title = `Chegada ${date}`;
+                break;
+            case 2:
+                title = `Almoço - Saída ${date}`;
+                break;
+            case 3:
+                title = `Almoço - Chegada ${date}`;
+                break;
+            case 4:
+                title = `Saída ${date}`;
+                break;
+            default:
+                title = ``
+                break;
+        }
+        return  {startDate, endDate, title};
+      }
+
     componentDidMount() {
         this.loadPoints();
     }
     
     render() {
-        const { points } = this.state;
+        const { pointsTable, pointsCalendar } = this.state;
         return (
         <React.Fragment>
             <Menu />
@@ -110,7 +146,10 @@ class Dashboard extends Component {
                     </form>
                 </SCGrid>
                 <SCGrid item lg={9} xs={12} >
-                    <TablePoints rows={points} />
+                    <TablePoints rows={pointsTable} />
+                </SCGrid>
+                <SCGrid xs={12}>
+                    <Calendar data = {pointsCalendar}/>
                 </SCGrid>
             </SCGrid>
             
