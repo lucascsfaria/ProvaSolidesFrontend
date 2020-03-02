@@ -12,7 +12,6 @@ import {
 
 
   export default function Caledario({ data }) {
-    console.log(data)
     return (
         
         <Paper>
